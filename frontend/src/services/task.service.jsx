@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios, { HttpStatusCode } from "axios";
 import { env } from "../config/constants";
 
 export const getTasks = async () => {
@@ -9,6 +9,9 @@ export const getTasks = async () => {
     else return { error: message };
   } catch (error) {
     console.error("Error:", error);
+    if (error?.response?.status === HttpStatusCode.NotFound) {
+      return [];
+    }
     return { error: error?.response?.data?.message || error.message };
   }
 };
