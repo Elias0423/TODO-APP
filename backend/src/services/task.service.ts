@@ -11,7 +11,7 @@ export default class TaskService {
   }
 
   public async getAll() {
-    const tasks = await this.taskReference.get();
+    const tasks = await this.taskReference.orderBy('createdAt', 'desc').get();
     if (!tasks.empty) {
       const formattedTasks = tasks.docs.map((task) => this.formatTask(task));
       return DEFAULT_RESPONSE(200, true, 'Tareas encontradas', formattedTasks);
